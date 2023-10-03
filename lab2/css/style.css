@@ -23,18 +23,34 @@ h1 {
     color: rgb(143, 143, 7);
 }
 
+.short-description::first-letter {
+    font-size: 1.5em;
+}
+
 ol > li span {
     margin-right: 8px;
 }
 
 ol > li a {
     color: red;
+    text-decoration: none;
 }
 
 ol > li a:hover {
     color: rgb(240, 134, 134);
+    text-decoration: underline;
 }
 
 ul > li em {
     background-color: rgb(193, 215, 234);
 }
+
+ol > li > dl > dt {
+    color: gold;
+    font-size: 11pt;
+}
+
+ol > li > dl > dd {
+    font-size: 10pt;
+}
+
