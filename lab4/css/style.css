@@ -1,0 +1,54 @@
+* {
+    font-family: 'Open Sans',sans-serif;
+}
+
+body {
+    background-color: rgb(245, 245, 248);
+}
+
+.login-container {
+    background-color: white;
+    padding: 16px;
+}
+.small-description {
+    font-size: 14px;
+    margin-top: 4px;
+    color: rgb(126, 134, 142);
+}
+
+.full-height {
+    height: 100vh;
+}
+
+.bg-body-tertiary {
+    background-color: rgb(37, 144, 226) !important;
+}
+
+.navbar-brand {
+    color: white !important;
+    margin-right: 60px;
+}
+
+.nav-item a {
+    color:  rgb(203, 228, 246) !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+    border-left: 1px solid white;
+}
+
+.text-white {
+    color: white;
+}
+
+.margin-lr-26 {
+    margin-left: 26px;
+    margin-right: 26px;;
+}
+
+.h3-title {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: rgb(57, 63, 39);
+    margin-left: -20px;
+}
+
