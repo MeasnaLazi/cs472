@@ -37,7 +37,7 @@ rabitHii.hide();
 rabitHii.run(10);
 
 let rabitHello = new Rabit("Hii", 70);
-let rabitNihoa = new Rabit("Hii", 50);
+let rabitNihoa = new Rabit("Nihoa", 50);
 
 Animal.compareBySpeed(rabitLazi, rabitHii);
 
