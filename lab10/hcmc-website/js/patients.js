@@ -157,7 +157,7 @@ const _filterPatients = (isElderly, isOutPatient) => {
             let dobDate = _convertStringToDate(p.dob);
             let age = _getAgeFromDate(dobDate);
 
-            return age > 65;
+            return age >= 65;
         });
     } else if (isOutPatient) {
         displayPatients = allPatients.filter(p => p.isOutPatient);
