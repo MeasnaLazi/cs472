@@ -1,5 +1,4 @@
 const { DB_USER } = require("../models/memory_db");
-const User = require("../models/user");
 const { UnAuthorizedExeption } = require("../exception/exceptions");
 
 class UserRepository {

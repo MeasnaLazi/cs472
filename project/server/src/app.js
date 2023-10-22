@@ -13,6 +13,9 @@ app.use(express.json());
 app.use(router);
 
 app.use((err, req, res, next) => {
+
+    console.log("err: " + err);
+
     if (err instanceof Exeption) {
         res.status(err.code).json(err.toJson());
     } else {

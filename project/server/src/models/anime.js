@@ -8,6 +8,16 @@ class Anime {
         this.description = description;
         this.upload_date =upload_date;
     }
+
+    update(name, type, thumbnail, src, description, upload_date) {
+        this.name = name;
+        this.type = type;
+        this.thumbnail = thumbnail;
+        this.src = src;
+        this.description = description;
+        this.upload_date = upload_date;
+    }
+
 }
 
 module.exports = Anime;
