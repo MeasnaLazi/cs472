@@ -1,27 +1,17 @@
 const express = require("express");
 const cors = require("cors");
+const auth = require("./auth/auth");
 const router = require("./routes/index");
-const { Exeption } = require("./exception/exceptions");
+const exceptionHandler = require("./exception/exception_handler");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-
 app.use(cors());
 app.use(express.json());
-
+app.use(auth);
 app.use(router);
-
-app.use((err, req, res, next) => {
-
-    console.log("err: " + err);
-
-    if (err instanceof Exeption) {
-        res.status(err.code).json(err.toJson());
-    } else {
-        res.status(500).json(err);
-    }
-});
+app.use(exceptionHandler);
 
 app.listen(PORT, () => {
     console.log("Server start at port: " + PORT);
