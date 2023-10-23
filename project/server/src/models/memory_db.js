@@ -1,4 +1,4 @@
-const DB_USER = [
+const LIST_USER = [
     {
         id: 1,
         username: "lazi",
@@ -6,7 +6,7 @@ const DB_USER = [
     }
 ];
 
-const DB_ANIME = [
+const LIST_ANIME = [
     {
         id: 1,
         name: "Seal of Throne",
@@ -19,8 +19,8 @@ const DB_ANIME = [
 ];
 
 module.exports = {
-    DB_USER,
-    DB_ANIME,
+    LIST_USER,
+    LIST_ANIME,
 }
 
 

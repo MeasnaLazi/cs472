@@ -2,9 +2,9 @@ const { UnAuthorizedExeption } = require("../exception/exceptions");
 
 let whiteList = [
     "/users",
-    "/homes",
-    "/homes/detail",
-    "/homes/filter"
+    "/home",
+    "/home/detail",
+    "/home/filter"
 ];
 
 const Auth = (req, res, next) => {

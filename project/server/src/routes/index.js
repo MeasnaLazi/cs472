@@ -7,9 +7,9 @@ const homeRouter = require("./home");
 const notFountRouter = require("./404");
 
 router.use("/users", userRouter);
-router.use("/animes", animeRouter);
-router.use("/homes", homeRouter);
+router.use("/anime", animeRouter);
+router.use("/home", homeRouter);
 router.use("*", notFountRouter);
 
-module.exports= router;
+module.exports = router;
 
