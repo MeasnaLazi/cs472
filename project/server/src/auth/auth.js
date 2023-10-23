@@ -1,7 +1,7 @@
 const { UnAuthorizedExeption } = require("../exception/exceptions");
 
 let whiteList = [
-    "/users",
+    "/users/login",
     /\/home*/,
 ];
 

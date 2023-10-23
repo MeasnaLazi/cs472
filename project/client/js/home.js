@@ -1,14 +1,26 @@
-let gridView;
+let gridView, btnLoginOrAdmin, modalLogin, btnLogin, formLogin, inputUsername, inputPassword;
 let listAnime = [];
 
 window.addEventListener("load", () => {
-    _initComponent();   
+    _initComponent(); 
+    _initEvent();  
     _fetchDataHome();
+    _checkAuthecation();
 });
 
-
 const _initComponent = () => {
-    gridView= document.getElementById("gridView");
+    gridView = document.getElementById("gridView");
+    btnLoginOrAdmin = document.getElementById("btnLoginOrAdmin");
+    modalLogin = new bootstrap.Modal(document.getElementById('modalLogin'), {});
+    btnLogin = document.getElementById("btnLogin");
+    formLogin = document.getElementById("formLogin");
+    inputUsername = document.getElementById("inputUsername");
+    inputPassword = document.getElementById("inputPassword");
+}
+
+const _initEvent = () => {
+    btnLoginOrAdmin.addEventListener("click", _onLoginOrAdminClick);
+    btnLogin.addEventListener("click", _onLoginClick);
 }
 
 const _reloadGridView = () => {
@@ -17,6 +29,10 @@ const _reloadGridView = () => {
     for (let anime of listAnime) {
         gridView.appendChild(_createItemView(anime));
     }
+}
+
+const _checkAuthecation = () => {
+    btnLoginOrAdmin.textContent = isAuth() ? "Admin" : "Login";
 }
 
 const _createItemView = (anime) => {
@@ -45,6 +61,25 @@ const _onItemClick = function() {
     window.location.href = "detail.html?id=" + this.id;
 }
 
+const _onLoginOrAdminClick = function() {
+    if (!isAuth()) {
+        modalLogin.show();
+    } else {
+        // open admin page
+    }
+}
+
+const _onLoginClick = function() {
+    formLogin.reportValidity();
+
+    if (formLogin.checkValidity()){
+        let username = inputUsername.value;
+        let password = inputPassword.value;
+
+        _login(username, password);
+    }
+}
+
 const _fetchDataHome = async () => {
     const response = await fetch(api("/home"));
 
@@ -54,4 +89,26 @@ const _fetchDataHome = async () => {
     }
     listAnime = await response.json();
     _reloadGridView();
+}
+
+const _login = async (username, password) => {
+    let obj = { username, password };
+    let option = {
+        method: "PUT",
+        body: JSON.stringify(obj),
+        headers: { "Content-Type": 'application/json' }
+    }
+    let response = await fetch(api("/users/login"), option);
+    let jsonResponse = await response.json()
+
+    if (response.ok) {
+        let token = jsonResponse["token"];
+        setAuth(token);
+        _checkAuthecation();
+        // re-direct to admin page
+    } else { 
+        alert(jsonResponse["message"]); 
+    };
+
+    modalLogin.hide();
 }
