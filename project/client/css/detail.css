@@ -1,0 +1,47 @@
+.anime-item {
+    margin-top: 12px;
+}
+
+.thumbnail {
+    float: left;
+    margin-right: 16px;
+}
+
+.related-list-item-img {
+    float: left;
+    margin-right: 10px;
+}
+
+.related-list-item-release-date {
+    color: #BBB;
+    font-size: 13px;
+    margin: 0;
+}
+
+.related-list-item-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+
+    font-size: 17px;
+    margin-top: 6px;
+    margin-bottom: 8px;
+}
+
+.related-list-item-type {
+    color: #BBB;
+    font-size: 15px;
+    margin: 0;
+}
+
+.related-list-item {
+    background-color: #f9f9f9;
+    padding: 10px;
+}
+
+.related-list-item:hover {
+    cursor: pointer;
+    background-color: #f0f0f0;
+}

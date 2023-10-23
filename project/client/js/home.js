@@ -1,12 +1,10 @@
 const BASE_URL = "http://localhost:3000";
-
-let gridView;
-
-let listAnime = [];
-
 const _api = (path) => {
     return BASE_URL + path;
 }
+
+let gridView;
+let listAnime = [];
 
 window.addEventListener("load", () => {
     _initComponent();   
@@ -21,18 +19,18 @@ const _reloadGridView = () => {
     gridView.innerHTML = "";
 
     for (let anime of listAnime) {
-        gridView.appendChild(_createItem(anime));
+        gridView.appendChild(_createItemView(anime));
     }
 }
 
-const _createItem = (anime) => {
+const _createItemView = (anime) => {
     let div= document.createElement("div");
     div.setAttribute("id", anime.id);
     div.classList.add("col", "mt-2", "anime-list-item");
     
     let img= document.createElement("img");
     img.style.width= '100%';
-    img.src= anime.thumbnial;
+    img.src= anime.thumbnail;
 
     let titleH3= document.createElement("h6");
     titleH3.classList.add("mt-2", "pb-2", "anime-name");
