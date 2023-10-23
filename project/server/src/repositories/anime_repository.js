@@ -54,6 +54,16 @@ class AnimeRepository {
         }
         return result;
     }
+
+    static getRelatedList(id) {
+        let result = LIST_ANIME.filter(a => a.id != id);
+
+        if (result.length > 5) {
+            result = result.slice(0, 5);
+        }
+
+        return result;
+    }
 }
 
 module.exports = AnimeRepository;

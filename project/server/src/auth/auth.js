@@ -2,16 +2,18 @@ const { UnAuthorizedExeption } = require("../exception/exceptions");
 
 let whiteList = [
     "/users",
-    "/home",
-    "/home/detail",
-    "/home/filter"
+    /\/home*/,
 ];
 
 const Auth = (req, res, next) => {
 
-    if (whiteList.includes(req.url)) {
-        next();
-        return;
+    for (let url  of whiteList) {
+        let regExp = new RegExp(url);
+        
+        if (regExp.test(req.url)) {
+            next();
+            return;
+        }
     }
 
     let fullToken = req.headers['authorization'] ?? undefined;

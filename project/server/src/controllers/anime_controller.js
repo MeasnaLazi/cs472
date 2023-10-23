@@ -16,10 +16,10 @@ const getAnimeById = (req, res, next) => {
 }
 
 const createAnime = (req, res, next) => {
-    let { id, name, type, thumbnial, src, description, upload_date } = req.body;
+    let { id, name, type, thumbnial, src, description, release_date } = req.body;
 
     if (id && name && type && thumbnial && src) {
-        let anime = new Anime(id, name, type, thumbnial, src, description, upload_date);
+        let anime = new Anime(id, name, type, thumbnial, src, description, release_date);
         AnimeRepository.createAnime(anime);
 
         res.status(201).json(anime);
@@ -37,8 +37,8 @@ const deleteAnime = (req, res, next) => {
 
 const updateAnime = (req, res, next) => {
     let id = parseInt(req.params.id);
-    let { name, type, thumbnial, src, description, upload_date } = req.body;
-    let anime = AnimeRepository.updateAnime(id, type, thumbnial, src, description, upload_date);
+    let { name, type, thumbnial, src, description, release_date } = req.body;
+    let anime = AnimeRepository.updateAnime(id, type, thumbnial, src, description, release_date);
 
     res.status(200).json(anime);
 }
@@ -51,11 +51,19 @@ const filterBy = (req, res, next) => {
     res.status(200).json(animes);
 }
 
+const getRelatedList = (req, res, next) => {
+    let id = req.params.id;
+    let animes = AnimeRepository.getRelatedList(id);
+    
+    res.status(200).json(animes);
+}
+
 module.exports = {
     getAllAnime,
     getAnimeById,
     createAnime,
     deleteAnime,
     updateAnime,
-    filterBy
+    filterBy,
+    getRelatedList
 };
