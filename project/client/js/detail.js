@@ -1,8 +1,3 @@
-const BASE_URL = "http://localhost:3000";
-const _api = (path) => {
-    return BASE_URL + path;
-}
-
 let relatedListView, youtubePlayerView, thumbnailImageView, titleLabel, typeLabel, releaseDateLabel, descriptionLabel;
 let animeDetail = {};
 let listAnime = [];
@@ -26,7 +21,7 @@ const _fetchDetail = async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
 
-    const response = await fetch(_api("/home/detail/" + id));
+    const response = await fetch(api("/home/detail/" + id));
 
     if (!response.ok) {
         alert("fetch data fail!");
@@ -39,7 +34,7 @@ const _fetchDetail = async () => {
 }
 
 const _fetchDataHome = async () => {
-    const response = await fetch(_api("/home/relate/" + animeDetail.id));
+    const response = await fetch(api("/home/relate/" + animeDetail.id));
 
     if (!response.ok) {
         alert("fetch data fail!");

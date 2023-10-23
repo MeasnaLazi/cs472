@@ -1,8 +1,3 @@
-const BASE_URL = "http://localhost:3000";
-const _api = (path) => {
-    return BASE_URL + path;
-}
-
 let gridView;
 let listAnime = [];
 
@@ -10,6 +5,7 @@ window.addEventListener("load", () => {
     _initComponent();   
     _fetchDataHome();
 });
+
 
 const _initComponent = () => {
     gridView= document.getElementById("gridView");
@@ -50,7 +46,7 @@ const _onItemClick = function() {
 }
 
 const _fetchDataHome = async () => {
-    const response = await fetch(_api("/home"));
+    const response = await fetch(api("/home"));
 
     if (!response.ok) {
         alert("fetch data fail!");
