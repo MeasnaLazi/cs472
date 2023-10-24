@@ -3,10 +3,11 @@ const { UnAuthorizedExeption } = require("../exception/exceptions");
 let whiteList = [
     "/users/login",
     /\/home*/,
+    /\/image*/,
 ];
 
 const Auth = (req, res, next) => {
-
+console.log("req.url: " + req.url);
     for (let url  of whiteList) {
         let regExp = new RegExp(url);
         

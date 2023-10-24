@@ -1,6 +1,7 @@
 const Anime = require("../models/anime");
 const AnimeRepository = require("../repositories/anime_repository");
 const {  InvalidFormatExeption } = require("../exception/exceptions");
+const { renameFileToJpeg } = require("../utils/file_utils"); 
 
 const getAllAnime = (req, res, next) => {
     let allAnime = AnimeRepository.getAllAnime();
@@ -16,10 +17,13 @@ const getAnimeById = (req, res, next) => {
 }
 
 const createAnime = (req, res, next) => {
-    let { id, name, type, thumbnial, src, description, release_date } = req.body;
+    let { id, name, type, src, description, release_date } = req.body;
+    let file = req.file;
+    let thumbnail = "image/" + file.filename + ".jpg";
+    renameFileToJpeg(file);
 
-    if (id && name && type && thumbnial && src) {
-        let anime = new Anime(id, name, type, thumbnial, src, description, release_date);
+    if (id && name && type && thumbnail && src) {
+        let anime = new Anime(id, name, type, thumbnail, src, description, release_date);
         AnimeRepository.createAnime(anime);
 
         res.status(201).json(anime);
