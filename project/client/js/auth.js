@@ -12,3 +12,7 @@ const setAuth = (token) => {
 const removeAuth = (token) => {
     window.localStorage.removeItem(KEY);
 }
+
+const getAuth = () => {
+    return window.localStorage.getItem(KEY);
+}

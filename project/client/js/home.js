@@ -56,6 +56,10 @@ const _createItemView = (anime) => {
     return div;
 }
 
+const _openAdminPage = () => {
+    window.location.href = "admin.html";
+}
+
 const _onItemClick = function() {
     console.log("item click: " + this.id);
     window.location.href = "detail.html?id=" + this.id;
@@ -65,7 +69,7 @@ const _onLoginOrAdminClick = function() {
     if (!isAuth()) {
         modalLogin.show();
     } else {
-        // open admin page
+        _openAdminPage();
     }
 }
 
@@ -96,7 +100,7 @@ const _login = async (username, password) => {
     let option = {
         method: "PUT",
         body: JSON.stringify(obj),
-        headers: { "Content-Type": 'application/json' }
+        headers: getHeaders()
     }
     let response = await fetch(api("/users/login"), option);
     let jsonResponse = await response.json()
@@ -105,7 +109,7 @@ const _login = async (username, password) => {
         let token = jsonResponse["token"];
         setAuth(token);
         _checkAuthecation();
-        // re-direct to admin page
+        _openAdminPage();
     } else { 
         alert(jsonResponse["message"]); 
     };

@@ -1,0 +1,30 @@
+.background-primary {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.btn-logout-wrapper {
+    justify-content: right;
+    margin-right: 2em;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+#btnAddNew {
+    float: right;
+}
+
+.container-width {
+    width: 60%;
+}
+
+.list-item-btn-container {
+    text-align: center;
+}
+.list-item-btn-middle {
+    margin-left: 8px;
+    margin-right: 8px;
+}
