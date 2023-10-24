@@ -42,7 +42,8 @@ const _createItemView = (anime) => {
     
     let img= document.createElement("img");
     img.style.width= '100%';
-    img.src= anime.thumbnail;
+    img.style.minHeight = "336px";
+    img.src= getImageFullPath(anime.thumbnail);
 
     let titleH3= document.createElement("h6");
     titleH3.classList.add("mt-2", "pb-2", "anime-name");

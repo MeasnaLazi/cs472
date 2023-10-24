@@ -57,7 +57,7 @@ const _setData = () => {
     _clearData();
 
     youtubePlayerView.src = animeDetail.src;
-    thumbnailImageView.src = animeDetail.thumbnail;
+    thumbnailImageView.src = getImageFullPath(animeDetail.thumbnail);
     titleLabel.appendChild(document.createTextNode(animeDetail.name));
     typeLabel.appendChild(document.createTextNode("Type: " + animeDetail.type));
     releaseDateLabel.appendChild(document.createTextNode("Release Date: " + animeDetail.release_date));
@@ -80,7 +80,7 @@ const _createItemView = (anime) => {
     let img = document.createElement("img");
     img.classList.add("related-list-item-img");
     img.style.width = '70px';
-    img.src = anime.thumbnail;
+    img.src = getImageFullPath(anime.thumbnail);
 
     let releaseDate= document.createElement("p");
     releaseDate.classList.add("related-list-item-release-date");

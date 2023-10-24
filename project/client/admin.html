@@ -35,7 +35,7 @@
    <div class="container container-width ">
         <h1>Anime Management System</h1>
         <div>
-            <div class="row align-items-center justify-content-between">
+            <div class="row align-items-center justify-content-between mb-2">
                 <div class="col-4">
                     <label for="inputSearch">Search:</label>
                     <input type="text" class="form-control" id="inputSearch" />
@@ -59,5 +59,57 @@
             </table>
         </div>
    </div>
+
+   <!-- Modal -->
+   <div class="modal fade" id="modalAddNew" tabindex="-1" aria-labelledby="modalAddNewLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalLoginLabel">Add New Anime</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formAddNewOrUpdate">
+                    <div>
+                        <label for="inputId" class="col-form-label">ID(*):</label>
+                        <input type="number" class="form-control" id="inputId" required>
+                    </div>
+                    <div>
+                        <label for="inputName" class="col-form-label">Name(*):</label>
+                        <input type="text" class="form-control" id="inputName" required>
+                    </div>
+                    <div>
+                        <label for="selectType" class="col-form-label">Type(*):</label>
+                        <select class="form-select" id="selectType" required>
+                            <option value="special">Special</option>
+                            <option value="television">Television</option>
+                            <option value="ota">Off The Air</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="inputSrc" class="col-form-label">Source(*):</label>
+                        <input type="text" class="form-control" id="inputSrc" required>
+                    </div>
+                    <div>
+                        <label for="inputReleaseDate" class="col-form-label">Release Date(*):</label>
+                        <input type="date" class="form-control" id="inputReleaseDate" required>
+                    </div>
+                    <div class="mt-2">
+                        <label for="fileThumbnail" class="form-label">Thumbnail(*):</label>
+                        <input class="form-control" type="file" id="fileThumbnail">
+                    </div>
+                    <div class="mt-2">
+                        <label for="inputDescription" class="form-label">Description(*):</label>
+                        <textarea class="form-control" id="inputDescription" rows="3"></textarea>
+                      </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnSaveOrUpdate">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

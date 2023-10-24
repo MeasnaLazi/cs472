@@ -16,3 +16,7 @@ const getHeaders = () => {
     
     return  headers;
 }
+
+const getImageFullPath = (path) => {
+    return BASE_URL + "/" + path;
+}

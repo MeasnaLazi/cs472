@@ -1,4 +1,6 @@
-let btnLogout, inputSearch, btnAddNew, animeListView;
+let btnLogout, inputSearch, btnAddNew, animeListView, modalAddNew;
+let formAddNewOrUpdate, btnSaveOrUpdate, inputId, inputName, selectType, inputSrc, 
+inputReleaseDate, fileThumbnail, inputDescription;
 
 let listAnime = [];
 
@@ -13,11 +15,22 @@ const _initComponent = () => {
     inputSearch = document.getElementById("inputSearch");
     btnAddNew = document.getElementById("btnAddNew");
     animeListView = document.getElementById("animeListView");
+    modalAddNew = new bootstrap.Modal(document.getElementById('modalAddNew'), {});
+    formAddNewOrUpdate = document.getElementById("formAddNewOrUpdate");
+    btnSaveOrUpdate = document.getElementById("btnSaveOrUpdate");
+    inputId = document.getElementById("inputId");
+    inputName = document.getElementById("inputName");
+    selectType = document.getElementById("selectType");
+    inputSrc = document.getElementById("inputSrc");
+    inputReleaseDate = document.getElementById("inputReleaseDate");
+    fileThumbnail = document.getElementById("fileThumbnail");
+    inputDescription = document.getElementById("inputDescription");
 }
 
 const _initEvent = () => {
     btnLogout.addEventListener("click", _onLogoutClick);
     btnAddNew.addEventListener("click", _onAddNewClick);
+    btnSaveOrUpdate.addEventListener("click", _onSaveOrUpdateClick);
 }
 
 const _reloadListView = () => {
@@ -37,16 +50,6 @@ const _addRowToTable = function (id, name, type, releaseDate) {
         cell.appendChild(document.createTextNode(e));
         row.appendChild(cell);
     }
-
-    // let btnView = document.createElement("button");
-    // btnView.classList.add("btn", "btn-primary");
-    // // btnView.textContent = "View";
-    // btnView.setAttribute("id", "btnView" + id);
-    // btnView.addEventListener("click", _onViewClick);
-
-    // let icon = document.createElement("i");
-    // icon.classList.add("fa", "fa-car");
-    // btnView.appendChild(icon);
 
     let cell = document.createElement('td');
     cell.appendChild(_createButtonsEachRown(id));
@@ -86,13 +89,12 @@ const _createButtonsEachRown = (rowId) => {
      return buttonContainer;
 } 
 
-
 const _onLogoutClick = function() {
     console.log("Logout");
 }
 
 const _onAddNewClick = function() {
-    console.log("AddNew");
+    modalAddNew.show();
 }
 
 const _onViewClick = function() {
@@ -105,6 +107,24 @@ const _onEditClick = function() {
 
 const _onDeleteClick = function() {
     console.log("this.id: " + this.id);
+}
+
+const _onSaveOrUpdateClick = function() {
+    formAddNewOrUpdate.reportValidity();
+
+    if (formAddNewOrUpdate.checkValidity()) {
+        let id = inputId.value;
+        let name = inputName.value;
+        let type = selectType.value;
+        let src = inputSrc.value;
+        let releaseDate = inputReleaseDate.value;
+        let thumbnail = fileThumbnail;
+        let description = inputDescription.value;
+
+        _addNewAnime(id, name, type, src, releaseDate, thumbnail, description);
+
+        // console.log(`id: ${id}, name: ${name}, type: ${type}, src: ${src}, releaseDate: ${releaseDate}, thumbnailPath: ${thumbnailPath}, description: ${description}`)
+    }
 }
 
 const _fetchData = async () => {
@@ -121,4 +141,42 @@ const _fetchData = async () => {
     } else { 
         alert(jsonResponse["message"]); 
     };
+}
+
+const _addNewAnime = async (id, name, type, src, releaseDate, thumbnail, description) => {
+
+    let formData = new FormData();
+
+    formData.append("id", id);
+    formData.append("name", name);
+    formData.append("type", type);
+    formData.append("src", src);
+    formData.append("release_date", releaseDate);
+    formData.append("thumbnail", thumbnail.files[0]);
+    formData.append("description", description);
+
+    let headers = getHeaders();
+    // headers["Content-Type"] = "multipart/form-data";
+    delete headers["Content-Type"];
+
+    console.log("headers: " + JSON.stringify(headers));
+
+    let option = {
+        method: "POST",
+        headers: headers,
+        body: formData
+    }
+
+    let response = await fetch(api("/anime"), option);
+    let jsonResponse = await response.json();
+
+    if (response.ok) {
+        listAnime.push(jsonResponse);
+        _reloadListView();
+        formAddNewOrUpdate.reset();
+        modalAddNew.hide();
+    } else {
+        alert(jsonResponse["message"]); 
+    }
+
 }
