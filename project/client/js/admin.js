@@ -4,6 +4,12 @@ inputReleaseDate, fileThumbnail, inputDescription;
 
 let listAnime = [];
 
+const Mode = {
+    ADD_NEW : "add-new",
+    EDIT: "edit",
+}
+let currentMode;
+
 window.addEventListener("load", () => {
     _initComponent();  
     _initEvent();
@@ -89,11 +95,29 @@ const _createButtonsEachRown = (rowId) => {
      return buttonContainer;
 } 
 
+const _fillData = (id) => {
+
+    let anime = listAnime.find(a => a.id == id);
+
+    inputId.value = anime.id;
+    inputName.value = anime.name;
+    selectType.value = anime.type;
+    inputSrc.value = anime.src;
+    inputReleaseDate.value = anime.release_date;
+    // fileThumbnail.value = anime.thumbnail;
+    // fileThumbnail.setAttribute("value", anime.thumbnail);
+    inputDescription.value = anime.description;
+}
+
 const _onLogoutClick = function() {
     console.log("Logout");
 }
 
 const _onAddNewClick = function() {
+    currentMode = Mode.ADD_NEW;
+    formAddNewOrUpdate.reset();
+    inputId.disabled = false;
+
     modalAddNew.show();
 }
 
@@ -102,7 +126,13 @@ const _onViewClick = function() {
 }
 
 const _onEditClick = function() {
-    console.log("this.id: " + this.id);
+    currentMode = Mode.EDIT;
+    formAddNewOrUpdate.reset();
+    inputId.disabled = true;
+
+    let id = this.id.split("_")[1];
+    _fillData(id);
+    modalAddNew.show();
 }
 
 const _onDeleteClick = function() {
@@ -121,9 +151,11 @@ const _onSaveOrUpdateClick = function() {
         let thumbnail = fileThumbnail;
         let description = inputDescription.value;
 
-        _addNewAnime(id, name, type, src, releaseDate, thumbnail, description);
-
-        // console.log(`id: ${id}, name: ${name}, type: ${type}, src: ${src}, releaseDate: ${releaseDate}, thumbnailPath: ${thumbnailPath}, description: ${description}`)
+        if (currentMode == Mode.ADD_NEW) {
+            _addNewAnime(id, name, type, src, releaseDate, thumbnail, description);
+        } else if (currentMode == Mode.EDIT) {
+            _updateAnime(id, name, type, src, releaseDate, thumbnail, description);
+        }
     }
 }
 
@@ -145,6 +177,11 @@ const _fetchData = async () => {
 
 const _addNewAnime = async (id, name, type, src, releaseDate, thumbnail, description) => {
 
+    if (thumbnail.files.length <= 0) {
+        alert("Please upload thumbnail!");
+        return;
+    }
+
     let formData = new FormData();
 
     formData.append("id", id);
@@ -156,10 +193,7 @@ const _addNewAnime = async (id, name, type, src, releaseDate, thumbnail, descrip
     formData.append("description", description);
 
     let headers = getHeaders();
-    // headers["Content-Type"] = "multipart/form-data";
     delete headers["Content-Type"];
-
-    console.log("headers: " + JSON.stringify(headers));
 
     let option = {
         method: "POST",
@@ -178,5 +212,43 @@ const _addNewAnime = async (id, name, type, src, releaseDate, thumbnail, descrip
     } else {
         alert(jsonResponse["message"]); 
     }
+}
 
+const _updateAnime = async (id, name, type, src, releaseDate, thumbnail, description) => {
+
+    let formData = new FormData();
+
+    formData.append("name", name);
+    formData.append("type", type);
+    formData.append("src", src);
+    formData.append("release_date", releaseDate);
+    formData.append("description", description);
+    
+    if (thumbnail.files.length > 0) {
+        formData.append("thumbnail", thumbnail.files[0]);
+    }
+
+    let headers = getHeaders();
+    delete headers["Content-Type"];
+
+    let option = {
+        method: "PUT",
+        headers: headers,
+        body: formData
+    }
+
+    let response = await fetch(api("/anime/" + id), option);
+    let jsonResponse = await response.json();
+
+    if (response.ok) {
+        let index = listAnime.findIndex(a => a.id == id);
+        listAnime[index] = { ...jsonResponse };
+
+        _reloadListView();
+
+        formAddNewOrUpdate.reset();
+        modalAddNew.hide();
+    } else {
+        alert(jsonResponse["message"]); 
+    }
 }

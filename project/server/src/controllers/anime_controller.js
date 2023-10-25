@@ -1,7 +1,7 @@
 const Anime = require("../models/anime");
 const AnimeRepository = require("../repositories/anime_repository");
-const {  InvalidFormatExeption } = require("../exception/exceptions");
-const { renameFileToJpeg } = require("../utils/file_utils"); 
+const {  InvalidFormatExeption, NotFoundExeption } = require("../exception/exceptions");
+const { renameFileToJpeg, removeFile } = require("../utils/file_utils"); 
 
 const getAllAnime = (req, res, next) => {
     let allAnime = AnimeRepository.getAllAnime();
@@ -41,8 +41,23 @@ const deleteAnime = (req, res, next) => {
 
 const updateAnime = (req, res, next) => {
     let id = parseInt(req.params.id);
-    let { name, type, thumbnial, src, description, release_date } = req.body;
-    let anime = AnimeRepository.updateAnime(id, type, thumbnial, src, description, release_date);
+    let { name, type, src, description, release_date } = req.body;
+    let findAnime = AnimeRepository.getAnimeById(id);
+
+    if (!findAnime) {
+        throw new NotFoundExeption("Anime not found!");
+    }
+
+    let thumbnail = undefined;
+
+    if (req.file) {
+        let file = req.file;
+        thumbnail = "image/" + file.filename + ".jpg";
+        renameFileToJpeg(file);
+        removeFile(findAnime.thumbnail);
+    }
+
+    let anime = AnimeRepository.updateAnime(id, name, type, thumbnail, src, description, release_date);
 
     res.status(200).json(anime);
 }

@@ -9,7 +9,7 @@ router.get("/", animeController.getAllAnime);
 router.get("/detail/:id", animeController.getAnimeById);
 router.post("/", upload.single("thumbnail"), animeController.createAnime);
 router.delete("/:id", animeController.deleteAnime);
-router.put("/:id", animeController.updateAnime);
+router.put("/:id", upload.single("thumbnail"), animeController.updateAnime);
 router.get("/filter", animeController.filterBy);
 
 module.exports = router;

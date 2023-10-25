@@ -33,11 +33,11 @@ class AnimeRepository {
         return deletedAnime;
     }
 
-    static updateAnime(id, name, type, thumbnail, src, description, upload_date) {
-        let foundAnime = DB_ANIME.find(a => a.id == id);
+    static updateAnime(id, name, type, thumbnail, src, description, release_date) {
+        let foundAnime = LIST_ANIME.find(a => a.id == id);
 
         if (foundAnime) {
-            foundAnime.update(name, type, thumbnail, src, description, upload_date);
+            foundAnime.updateAnime(name, type, thumbnail, src, description, release_date);
         } else {
             throw new NotFoundExeption("Anime not found!");
         }

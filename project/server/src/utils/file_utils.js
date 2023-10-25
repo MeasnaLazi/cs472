@@ -8,11 +8,17 @@ const  jpegOnly = function(req, file, callback) {
     callback(null, true);
 }
 
+const removeFile = (path) => {
+    let filename = path.split("/")[1];
+    fs.unlink("uploads/" + filename, () => {});
+}
+
 const renameFileToJpeg = (file) => {
     fs.renameSync("uploads/" + file.filename, "uploads/" + file.filename + ".jpg");
 }
 
 module.exports = {
     jpegOnly,
-    renameFileToJpeg
+    renameFileToJpeg,
+    removeFile
 }
