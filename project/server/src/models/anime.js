@@ -26,7 +26,6 @@ class Anime {
             this.thumbnail = thumbnail;
         }
     }
-
 }
 
 module.exports = Anime;

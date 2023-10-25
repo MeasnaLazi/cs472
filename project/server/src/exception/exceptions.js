@@ -5,10 +5,9 @@ class Exeption extends Error {
         this.name = name;
         this.message = message;
     }
-
+    
     toJson() {
         return {
-            // name: this.name,
             message: this.message,
         }
     }

@@ -6,14 +6,23 @@ let whiteList = [
     /\/image*/,
 ];
 
-const Auth = (req, res, next) => {
+const _isInWhiteList = (reqUrl) => {
     for (let url  of whiteList) {
         let regExp = new RegExp(url);
         
-        if (regExp.test(req.url)) {
-            next();
-            return;
+        if (regExp.test(reqUrl)) {
+            return true;
         }
+    }
+
+    return false;
+}
+
+const Auth = (req, res, next) => {
+
+    if (_isInWhiteList(req.url)) {
+        next();
+        return;
     }
 
     let fullToken = req.headers['authorization'] ?? undefined;

@@ -1,4 +1,4 @@
-const { LIST_USER } = require("../models/memory_db");
+const { LIST_USER } = require("../database/memory_db");
 const { UnAuthorizedExeption } = require("../exception/exceptions");
 
 class UserRepository {

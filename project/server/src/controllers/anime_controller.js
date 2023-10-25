@@ -20,6 +20,7 @@ const createAnime = (req, res, next) => {
     let { id, name, type, src, description, release_date } = req.body;
     let file = req.file;
     let thumbnail = "image/" + file.filename + ".jpg";
+
     renameFileToJpeg(file);
 
     if (id && name && type && thumbnail && src) {
@@ -35,6 +36,7 @@ const createAnime = (req, res, next) => {
 const deleteAnime = (req, res, next) => {
     let id = parseInt(req.params.id);
     let anime = AnimeRepository.deleteAnimeById(id);
+
     removeFile(anime.thumbnail);
     
     res.status(200).json(anime);
@@ -54,6 +56,7 @@ const updateAnime = (req, res, next) => {
     if (req.file) {
         let file = req.file;
         thumbnail = "image/" + file.filename + ".jpg";
+        
         renameFileToJpeg(file);
         removeFile(findAnime.thumbnail);
     }

@@ -1,4 +1,4 @@
-const { LIST_ANIME } = require("../models/memory_db");
+const { LIST_ANIME } = require("../database/memory_db");
 const { NotFoundExeption } = require("../exception/exceptions");
 
 class AnimeRepository {
@@ -57,6 +57,7 @@ class AnimeRepository {
             console.log("type: " + type);
             result = result.filter(a => a.type == type);
         }
+        
         return result;
     }
 

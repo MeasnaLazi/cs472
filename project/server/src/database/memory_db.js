@@ -1,4 +1,4 @@
-const Anime = require("./anime");
+const Anime = require("../models/anime");
 
 const LIST_USER = [
     {
