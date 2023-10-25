@@ -9,7 +9,7 @@ const setAuth = (token) => {
     window.localStorage.setItem(KEY, token);
 }
 
-const removeAuth = (token) => {
+const removeAuth = () => {
     window.localStorage.removeItem(KEY);
 }
 

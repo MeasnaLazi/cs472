@@ -117,7 +117,8 @@ const _fillData = (id) => {
 }
 
 const _onLogoutClick = function() {
-    console.log("Logout");
+    removeAuth();
+    window.location.replace("home.html");
 }
 
 const _onAddNewClick = function() {
