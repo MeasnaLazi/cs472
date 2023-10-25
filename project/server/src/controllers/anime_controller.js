@@ -64,9 +64,9 @@ const updateAnime = (req, res, next) => {
 }
 
 const filterBy = (req, res, next) => {
-    let name = req.query.name ?? "";
+    let keyword = req.query.keyword ?? "";
     let type = req.query.type ?? undefined;
-    let animes = AnimeRepository.filterBy(name, type);
+    let animes = AnimeRepository.filterBy(keyword, type);
 
     res.status(200).json(animes);
 }

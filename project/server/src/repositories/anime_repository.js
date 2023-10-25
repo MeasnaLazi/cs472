@@ -45,11 +45,16 @@ class AnimeRepository {
        return foundAnime;
     }
 
-    static filterBy(name, type) {
-        const regex = new RegExp('.*' + name + ".*", 'i');
-        let result = LIST_ANIME.filter(a => regex.match(a.name));
-
+    static filterBy(keyword, type) {
+        let result = LIST_ANIME;
+        
+        if (keyword != "") {
+            const regex = new RegExp('.*' + keyword + ".*", 'i');
+            result = result.filter(a => regex.test(a.name));
+        }
+        
         if (type) {
+            console.log("type: " + type);
             result = result.filter(a => a.type == type);
         }
         return result;

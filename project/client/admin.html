@@ -35,10 +35,28 @@
    <div class="container container-width ">
         <h1>Anime Management System</h1>
         <div>
-            <div class="row align-items-center justify-content-between mb-2">
-                <div class="col-4">
-                    <label for="inputSearch">Search:</label>
-                    <input type="text" class="form-control" id="inputSearch" />
+            <div class="row align-items-end justify-content-between mb-2">
+                <div class="col-6">
+                    <div class="row align-items-end">
+                        <div class="col-6">
+                            <label for="inputSearch">Search:</label>
+                            <input type="text" class="form-control" id="inputSearch" />
+                        </div>
+                        <div class="col-4">
+                            <label for="selectFilterType" class="col-form-label">Type:</label>
+                            <select class="form-select" id="selectFilterType" required>
+                                <option value="">None</option>
+                                <option value="Special">Special</option>
+                                <option value="Television">Television</option>
+                                <option value="Off The Air">Off The Air</option>
+                            </select>
+                        </div>
+                        <div class="col-2">
+                            <button type="button" class="btn btn-primary" id="btnSearch">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-2">
                     <button type="button" class="btn btn-primary" id="btnAddNew">Add New</button>
@@ -114,22 +132,20 @@
 
     <div class="modal fade" id="modalDelete" tabindex="-1">
         <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Delete Confirmation</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Confirmation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="labelDelete"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-primary" id="btnYes">Yes</button>
+                </div>
             </div>
-            <div class="modal-body">
-              <p id="labelDelete"></p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-              <button type="button" class="btn btn-primary" id="btnYes">Yes</button>
-            </div>
-          </div>
         </div>
-      </div>
-
-
+    </div>
 </body>
 </html>

@@ -1,6 +1,6 @@
-let btnLogout, inputSearch, btnAddNew, animeListView, modalAddNew;
+let btnLogout, inputSearch, btnSearch, btnAddNew, animeListView, modalAddNew;
 let formAddNewOrUpdate, btnSaveOrUpdate, inputId, inputName, selectType, inputSrc, 
-inputReleaseDate, fileThumbnail, inputDescription;
+inputReleaseDate, fileThumbnail, inputDescription, selectFilterType;
 let modalDelete, labelDelete, btnYes;
 
 let listAnime = [];
@@ -21,6 +21,7 @@ window.addEventListener("load", () => {
 const _initComponent = () => {
     btnLogout = document.getElementById("btnLogout");
     inputSearch = document.getElementById("inputSearch");
+    btnSearch = document.getElementById("btnSearch");
     btnAddNew = document.getElementById("btnAddNew");
     animeListView = document.getElementById("animeListView");
     modalAddNew = new bootstrap.Modal(document.getElementById('modalAddNew'), {});
@@ -33,6 +34,7 @@ const _initComponent = () => {
     inputReleaseDate = document.getElementById("inputReleaseDate");
     fileThumbnail = document.getElementById("fileThumbnail");
     inputDescription = document.getElementById("inputDescription");
+    selectFilterType = document.getElementById("selectFilterType");
     modalDelete = new bootstrap.Modal(document.getElementById("modalDelete"), {});
     labelDelete = document.getElementById("labelDelete");
     btnYes = document.getElementById("btnYes");
@@ -43,12 +45,13 @@ const _initEvent = () => {
     btnAddNew.addEventListener("click", _onAddNewClick);
     btnSaveOrUpdate.addEventListener("click", _onSaveOrUpdateClick);
     btnYes.addEventListener("click", _onYesClick);
+    btnSearch.addEventListener("click", _onSearchClick);
 }
 
-const _reloadListView = () => {
+const _reloadListView = (animes) => {
     animeListView.innerHTML = "";
 
-    for (let anime of listAnime) {
+    for (let anime of animes) {
         _addRowToTable(anime.id, anime.name, anime.type, anime.release_date);
     }
 }
@@ -157,6 +160,17 @@ const _onYesClick = function() {
     }
 }
 
+const _onSearchClick = function() {
+    let keyword = inputSearch.value;
+    let type = selectFilterType.value;
+
+    if (keyword || type) {
+        _filterAnime(keyword, type);
+    } else {
+        _reloadListView(listAnime);
+    }
+}
+
 const _onSaveOrUpdateClick = function() {
     formAddNewOrUpdate.reportValidity();
 
@@ -187,7 +201,7 @@ const _fetchData = async () => {
 
     if (response.ok) {
         listAnime = jsonResponse;
-        _reloadListView();
+        _reloadListView(listAnime);
     } else { 
         alert(jsonResponse["message"]); 
     };
@@ -224,7 +238,7 @@ const _addNewAnime = async (id, name, type, src, releaseDate, thumbnail, descrip
 
     if (response.ok) {
         listAnime.push(jsonResponse);
-        _reloadListView();
+        _reloadListView(listAnime);
         formAddNewOrUpdate.reset();
         modalAddNew.hide();
     } else {
@@ -262,7 +276,7 @@ const _updateAnime = async (id, name, type, src, releaseDate, thumbnail, descrip
         let index = listAnime.findIndex(a => a.id == id);
         listAnime[index] = { ...jsonResponse };
 
-        _reloadListView();
+        _reloadListView(listAnime);
 
         formAddNewOrUpdate.reset();
         modalAddNew.hide();
@@ -284,9 +298,31 @@ const _deleteAnime = async (id) => {
     if (response.ok) {
         let index = listAnime.findIndex(a => a.id == id);
         listAnime.splice(index, 1);
-        _reloadListView();
+        _reloadListView(listAnime);
         modalDelete.hide();
     } else {
         alert(jsonResponse["message"]); 
     }
+}
+
+const _filterAnime = async (keyword, type) => {
+    let option = {
+        method: "GET",
+        headers: getHeaders()
+    }
+
+    let url = api("/anime/filter?keyword=" + keyword);
+
+    if (type != "") {
+        url += "&type=" + type;
+    }
+    
+    let response = await fetch(url, option);
+    let jsonResponse = await response.json();
+
+    if (response.ok) {
+        _reloadListView(jsonResponse);
+    } else { 
+        alert(jsonResponse["message"]); 
+    };
 }
