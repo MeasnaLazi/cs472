@@ -19,6 +19,7 @@ h1 {
 
 .container-width {
     width: 60%;
+    min-height: 80vh;
 }
 
 .list-item-btn-container {

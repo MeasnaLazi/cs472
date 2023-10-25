@@ -49,8 +49,23 @@ const _createItemView = (anime) => {
     titleH3.classList.add("mt-2", "pb-2", "anime-name");
     titleH3.appendChild(document.createTextNode(anime.name))
 
+    let divSubTitle = document.createElement("div");
+    divSubTitle.classList.add("row", "align-items-center", "justify-content-between");
+
+    let divType = document.createElement("div");
+    divType.classList.add("col-6", "anime-subtitle-left");
+    divType.appendChild(document.createTextNode(anime.type))
+
+    let divReleaseDate = document.createElement("div");
+    divReleaseDate.classList.add("col-6", "anime-subtitle-right");
+    divReleaseDate.appendChild(document.createTextNode(anime.release_date))
+
+    divSubTitle.appendChild(divType);
+    divSubTitle.appendChild(divReleaseDate);
+
     div.appendChild(img);
     div.appendChild(titleH3);
+    div.appendChild(divSubTitle);
     
     div.addEventListener("click", _onItemClick);
 
