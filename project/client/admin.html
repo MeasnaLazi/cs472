@@ -58,58 +58,78 @@
                 </tbody>
             </table>
         </div>
-   </div>
+    </div>
 
-   <!-- Modal -->
-   <div class="modal fade" id="modalAddNew" tabindex="-1" aria-labelledby="modalAddNewLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="modalLoginLabel">Add New Anime</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="formAddNewOrUpdate">
-                    <div>
-                        <label for="inputId" class="col-form-label">ID(*):</label>
-                        <input type="number" class="form-control" id="inputId" required>
-                    </div>
-                    <div>
-                        <label for="inputName" class="col-form-label">Name(*):</label>
-                        <input type="text" class="form-control" id="inputName" required>
-                    </div>
-                    <div>
-                        <label for="selectType" class="col-form-label">Type(*):</label>
-                        <select class="form-select" id="selectType" required>
-                            <option value="Special">Special</option>
-                            <option value="Television">Television</option>
-                            <option value="Off The Air">Off The Air</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="inputSrc" class="col-form-label">Source(*):</label>
-                        <input type="text" class="form-control" id="inputSrc" required>
-                    </div>
-                    <div>
-                        <label for="inputReleaseDate" class="col-form-label">Release Date(*):</label>
-                        <input type="date" class="form-control" id="inputReleaseDate" required>
-                    </div>
-                    <div class="mt-2">
-                        <label for="fileThumbnail" class="form-label">Thumbnail(*):</label>
-                        <input class="form-control" type="file" id="fileThumbnail">
-                    </div>
-                    <div class="mt-2">
-                        <label for="inputDescription" class="form-label">Description(*):</label>
-                        <textarea class="form-control" id="inputDescription" rows="3" required></textarea>
-                      </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btnSaveOrUpdate">Save</button>
+   <!-- Modal AddNew or Update -->
+    <div class="modal fade" id="modalAddNew" tabindex="-1" aria-labelledby="modalAddNewLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalLoginLabel">Add New Anime</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formAddNewOrUpdate">
+                        <div>
+                            <label for="inputId" class="col-form-label">ID(*):</label>
+                            <input type="number" class="form-control" id="inputId" required>
+                        </div>
+                        <div>
+                            <label for="inputName" class="col-form-label">Name(*):</label>
+                            <input type="text" class="form-control" id="inputName" required>
+                        </div>
+                        <div>
+                            <label for="selectType" class="col-form-label">Type(*):</label>
+                            <select class="form-select" id="selectType" required>
+                                <option value="Special">Special</option>
+                                <option value="Television">Television</option>
+                                <option value="Off The Air">Off The Air</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="inputSrc" class="col-form-label">Source(*):</label>
+                            <input type="text" class="form-control" id="inputSrc" required>
+                        </div>
+                        <div>
+                            <label for="inputReleaseDate" class="col-form-label">Release Date(*):</label>
+                            <input type="date" class="form-control" id="inputReleaseDate" required>
+                        </div>
+                        <div class="mt-2">
+                            <label for="fileThumbnail" class="form-label">Thumbnail(*):</label>
+                            <input class="form-control" type="file" id="fileThumbnail">
+                        </div>
+                        <div class="mt-2">
+                            <label for="inputDescription" class="form-label">Description(*):</label>
+                            <textarea class="form-control" id="inputDescription" rows="3" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnSaveOrUpdate">Save</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    <div class="modal fade" id="modalDelete" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Delete Confirmation</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p id="labelDelete"></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+              <button type="button" class="btn btn-primary" id="btnYes">Yes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
 </body>
 </html>

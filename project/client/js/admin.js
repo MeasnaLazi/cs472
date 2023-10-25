@@ -1,6 +1,7 @@
 let btnLogout, inputSearch, btnAddNew, animeListView, modalAddNew;
 let formAddNewOrUpdate, btnSaveOrUpdate, inputId, inputName, selectType, inputSrc, 
 inputReleaseDate, fileThumbnail, inputDescription;
+let modalDelete, labelDelete, btnYes;
 
 let listAnime = [];
 
@@ -9,6 +10,7 @@ const Mode = {
     EDIT: "edit",
 }
 let currentMode;
+let deleteAnimeId = undefined;
 
 window.addEventListener("load", () => {
     _initComponent();  
@@ -31,12 +33,16 @@ const _initComponent = () => {
     inputReleaseDate = document.getElementById("inputReleaseDate");
     fileThumbnail = document.getElementById("fileThumbnail");
     inputDescription = document.getElementById("inputDescription");
+    modalDelete = new bootstrap.Modal(document.getElementById("modalDelete"), {});
+    labelDelete = document.getElementById("labelDelete");
+    btnYes = document.getElementById("btnYes");
 }
 
 const _initEvent = () => {
     btnLogout.addEventListener("click", _onLogoutClick);
     btnAddNew.addEventListener("click", _onAddNewClick);
     btnSaveOrUpdate.addEventListener("click", _onSaveOrUpdateClick);
+    btnYes.addEventListener("click", _onYesClick);
 }
 
 const _reloadListView = () => {
@@ -88,7 +94,7 @@ const _createButtonsEachRown = (rowId) => {
         if (button.prefixId == "btnEdit") {
             btnView.classList.add("list-item-btn-middle");
         }
-
+        
         buttonContainer.appendChild(btnView);
     }
 
@@ -104,8 +110,6 @@ const _fillData = (id) => {
     selectType.value = anime.type;
     inputSrc.value = anime.src;
     inputReleaseDate.value = anime.release_date;
-    // fileThumbnail.value = anime.thumbnail;
-    // fileThumbnail.setAttribute("value", anime.thumbnail);
     inputDescription.value = anime.description;
 }
 
@@ -122,7 +126,8 @@ const _onAddNewClick = function() {
 }
 
 const _onViewClick = function() {
-    console.log("this.id: " + this.id);
+    let id = this.id.split("_")[1];
+    window.open("detail.html?id=" + id, '_blank').focus();
 }
 
 const _onEditClick = function() {
@@ -136,7 +141,20 @@ const _onEditClick = function() {
 }
 
 const _onDeleteClick = function() {
-    console.log("this.id: " + this.id);
+    let id = this.id.split("_")[1];
+    let anime = listAnime.find(a => a.id == id);
+    deleteAnimeId = id;
+
+    labelDelete.innerHTML = "";
+    labelDelete.appendChild(document.createTextNode("Do you really want to delete '" + anime.name + "' ?"))
+
+    modalDelete.show();
+}
+
+const _onYesClick = function() {
+    if (deleteAnimeId != undefined) {
+        _deleteAnime(deleteAnimeId);
+    }
 }
 
 const _onSaveOrUpdateClick = function() {
@@ -223,7 +241,7 @@ const _updateAnime = async (id, name, type, src, releaseDate, thumbnail, descrip
     formData.append("src", src);
     formData.append("release_date", releaseDate);
     formData.append("description", description);
-    
+
     if (thumbnail.files.length > 0) {
         formData.append("thumbnail", thumbnail.files[0]);
     }
@@ -248,6 +266,26 @@ const _updateAnime = async (id, name, type, src, releaseDate, thumbnail, descrip
 
         formAddNewOrUpdate.reset();
         modalAddNew.hide();
+    } else {
+        alert(jsonResponse["message"]); 
+    }
+}
+
+const _deleteAnime = async (id) => {
+
+    let option = {
+        method: "DELETE",
+        headers: getHeaders(),
+    }
+
+    let response = await fetch(api("/anime/" + id), option);
+    let jsonResponse = await response.json();
+
+    if (response.ok) {
+        let index = listAnime.findIndex(a => a.id == id);
+        listAnime.splice(index, 1);
+        _reloadListView();
+        modalDelete.hide();
     } else {
         alert(jsonResponse["message"]); 
     }

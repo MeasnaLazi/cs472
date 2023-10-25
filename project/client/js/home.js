@@ -62,7 +62,7 @@ const _openAdminPage = () => {
 }
 
 const _onItemClick = function() {
-    console.log("item click: " + this.id);
+    // console.log("item click: " + this.id);
     window.location.href = "detail.html?id=" + this.id;
 }
 

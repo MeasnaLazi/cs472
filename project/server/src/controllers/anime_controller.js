@@ -35,6 +35,7 @@ const createAnime = (req, res, next) => {
 const deleteAnime = (req, res, next) => {
     let id = parseInt(req.params.id);
     let anime = AnimeRepository.deleteAnimeById(id);
+    removeFile(anime.thumbnail);
     
     res.status(200).json(anime);
 }
