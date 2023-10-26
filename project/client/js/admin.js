@@ -10,7 +10,7 @@ const Mode = {
     EDIT: "edit",
 }
 let currentMode;
-let deleteAnimeId = undefined;
+let deleteAnimeId;
 
 window.addEventListener("load", () => {
     _initComponent();  
@@ -141,16 +141,18 @@ const _onEditClick = function() {
 
     let id = this.id.split("_")[1];
     _fillData(id);
+
     modalAddNew.show();
 }
 
 const _onDeleteClick = function() {
     let id = this.id.split("_")[1];
     let anime = listAnime.find(a => a.id == id);
-    deleteAnimeId = id;
 
     labelDelete.innerHTML = "";
     labelDelete.appendChild(document.createTextNode("Do you really want to delete '" + anime.name + "' ?"))
+    
+    deleteAnimeId = id;
 
     modalDelete.show();
 }
@@ -239,7 +241,9 @@ const _addNewAnime = async (id, name, type, src, releaseDate, thumbnail, descrip
 
     if (response.ok) {
         listAnime.push(jsonResponse);
+
         _reloadListView(listAnime);
+
         formAddNewOrUpdate.reset();
         modalAddNew.hide();
     } else {
@@ -299,7 +303,9 @@ const _deleteAnime = async (id) => {
     if (response.ok) {
         let index = listAnime.findIndex(a => a.id == id);
         listAnime.splice(index, 1);
+
         _reloadListView(listAnime);
+
         modalDelete.hide();
     } else {
         alert(jsonResponse["message"]); 

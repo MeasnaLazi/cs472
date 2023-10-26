@@ -17,33 +17,6 @@ const _initComponent = () => {
     descriptionLabel = document.getElementById("descriptionLabel");
 }
 
-const _fetchDetail = async () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id');
-
-    const response = await fetch(api("/home/detail/" + id));
-
-    if (!response.ok) {
-        alert("fetch data fail!");
-        return;
-    }
-   
-    animeDetail = await response.json();
-    _setData();
-    _fetchDataHome();
-}
-
-const _fetchDataHome = async () => {
-    const response = await fetch(api("/home/relate/" + animeDetail.id));
-
-    if (!response.ok) {
-        alert("fetch data fail!");
-        return;
-    }
-    listAnime = await response.json();
-    _reloadListView();
-}
-
 const _clearData = () => {
     youtubePlayerView.src = "";
     thumbnailImageView.src = "";
@@ -106,12 +79,39 @@ const _createItemView = (anime) => {
 
 const _onItemClick = function() {
     let findAnime = listAnime.find(a => a.id == this.id);
+
     if (findAnime) {
         animeDetail = findAnime;
         _setData();
-        // _reloadListView();
-        _fetchDataHome();
+        _fetchRelatedAnime();
     }
+}
+
+const _fetchDetail = async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+
+    const response = await fetch(api("/home/detail/" + id));
+
+    if (!response.ok) {
+        alert("fetch data fail!");
+        return;
+    }
+   
+    animeDetail = await response.json();
+    _setData();
+    _fetchRelatedAnime();
+}
+
+const _fetchRelatedAnime = async () => {
+    const response = await fetch(api("/home/relate/" + animeDetail.id));
+
+    if (!response.ok) {
+        alert("fetch data fail!");
+        return;
+    }
+    listAnime = await response.json();
+    _reloadListView();
 }
 
 
